@@ -1,0 +1,22 @@
+{
+    "type": "postgres",
+    "username": "admin",
+    "password": "my-weak-password",
+    "host": "localhost",
+    "port": 5432,
+    "database": "postgresPosta",
+    "entities": [
+        "src/**/**/*.entity{.ts,.js}"
+    ],
+    "migrations": [
+        "src/database/migrations/posgrest/*{.ts,.js}"
+    ],
+    "cli": {
+        "migrationsDir": "src/database/migrations/postgres"
+    },
+    "paths": {
+        "@/modules/*": ["src/modules/*"],
+        "@/config/*": ["src/config/*"],
+        "@/shared/*": ["src/shared/*"]
+    }
+}
