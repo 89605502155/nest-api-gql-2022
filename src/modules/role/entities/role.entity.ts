@@ -1,6 +1,6 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Status } from '../../../shared/enums';
-//import { User } from '../../user/entities';
+import { User } from '../../user/entities';
 
 @Entity({ name: 'roles' })
 export class Role {
@@ -13,8 +13,16 @@ export class Role {
     @Column({ type: 'varchar', length: 240 })
     description: string;
 
-    @Column({ type: 'varchar', default: Status.ACTIVE, length: 9 })
-    status: string;
+    @Column({
+        type: 'int',
+        name: 'status',
+        default: Status.ACTIVE,
+        transformer: {
+            from: (value: number) => Status[value],
+            to: (value: number) => value,
+        },
+    })
+    status: Status;
 
     @CreateDateColumn({ type: 'timestamp', nullable: true, name: 'created_at' })
     createdAt: Date;
@@ -22,6 +30,6 @@ export class Role {
     @UpdateDateColumn({ type: 'timestamp', nullable: true, name: 'updated_at' })
     updatedAt: Date;
 
-    /*   @OneToMany(() => User, (user) => user.role)
-    users: User[]; */
+    @OneToMany(() => User, (user) => user.role)
+    users: User[];
 }

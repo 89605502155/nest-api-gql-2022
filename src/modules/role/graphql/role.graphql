@@ -2,7 +2,7 @@ type Role {
     id: Int!
     name: String!
     description: String
-    status: String
+    status: Status
     createdAt: String
     updatedAt: String
 }
@@ -10,7 +10,7 @@ type Role {
 input CreateRoleInput {
     name: String!
     description: String!
-    status: String
+    status: Status
     createdAt: String
     updatedAt: String
 }
@@ -18,10 +18,18 @@ input CreateRoleInput {
 input UpdateRoleInput {
     name: String
     description: String
-    status: String
+    status: Status
     createdAt: String
     updatedAt: String
 }
+
+enum RoleType {
+  SUPERUSER
+  ADMIN
+  BUSINESS
+  CUSTOMER
+}
+
 
 type Query {
     getRole(id: Int!): Role!

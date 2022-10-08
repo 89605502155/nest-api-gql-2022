@@ -1,0 +1,54 @@
+type User {
+    id: Int!
+    roleId: Int!
+    email: String!
+    password: String
+    username: String
+    status: Status
+    createdAt: String
+    updatedAt: String
+    profile: Profile
+    role: Role!
+    companyId: Int
+    roleName: RoleType
+}
+
+input UpdateUserDto {
+    email: String!
+    password: String
+    status: Status
+}
+
+input CreateUserDto {
+    email: String!
+    roleId: RoleType
+    username: String
+    password: String
+    status: Status
+}
+
+input QueryUserEmailDto {
+    email: String!
+}
+
+input NewContactDto {
+    email: String!
+    phone: String!
+    description: String
+}
+
+type Query {
+    getUser(id: Int!): User!
+    getUserData: User!
+    getUsers: [User!]!
+}
+
+type Mutation {
+    createUser(input: CreateUserDto!): User!
+    requestUserPassword(input: QueryUserEmailDto!): Boolean! 
+    ##createUserCompany(input: CreateUserDto!,inputPro: CreateProfileUserDto!, inputCom:CreateCompanyDto!): User!
+    findByEmail(input: QueryUserEmailDto!): Boolean!  
+    updateUser(input: UpdateUserDto!): User!
+    deleteUser(id: Int!): User!
+    contactAdmin(input: NewContactDto!): Boolean
+}

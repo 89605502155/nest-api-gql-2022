@@ -17,7 +17,7 @@ export class RoleSeederService {
             const { name } = role;
             const roleN = await this.roleRepository.findOne({ name });
             if (!roleN) {
-                const createRole = this.roleRepository.create(role);
+                const createRole = await this.roleRepository.create(role);
                 return await this.roleRepository.save(createRole);
             } else return roleN;
         });

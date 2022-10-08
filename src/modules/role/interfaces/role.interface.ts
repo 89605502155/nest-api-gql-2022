@@ -1,11 +1,10 @@
-import { RoleType } from '../enums';
 import { Status } from '@/shared/enums';
 
 export interface IRole {
     /**
      * ID autoincrement from database.
      */
-    readonly id?: RoleType;
+    readonly id?: number;
 
     /**
      * Name of Role

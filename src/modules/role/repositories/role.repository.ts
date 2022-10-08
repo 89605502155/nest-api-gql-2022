@@ -12,7 +12,7 @@ export class RoleRepository extends Repository<Role> {
         });
     }
 
-    async findOneById(roleId: number, status?: string): Promise<Role> {
+    async findOneById(roleId: number, status?: Status): Promise<Role> {
         if (!roleId) throw new BadRequestException('The role ID is required');
         const role = await this.findOne(roleId, {
             where: { status: Status.ACTIVE },
@@ -37,15 +37,15 @@ export class RoleRepository extends Repository<Role> {
         if (role) throw new BadRequestException('The role is already registered');
         const newRole = this.create(dto);
         const roleSaved = await this.save(newRole);
-        return roleSaved;
+        return await this.findOneById(roleSaved[0].id);
     }
 
     async updateRole(roleId: number, dto: UpdateRoleDto): Promise<Role> {
         if (!roleId) throw new BadRequestException('The role ID is required');
         const role = await this.findOneById(roleId);
         const roleToUpdate = Object.assign(role, dto);
-        const roleUpdated = await this.save(roleToUpdate);
-        return roleUpdated;
+        await this.save(roleToUpdate);
+        return this.findOneById(roleId);
     }
 
     async deleteRole(roleId: number): Promise<Role> {
@@ -65,7 +65,7 @@ export class RoleRepository extends Repository<Role> {
         if (!roleId) throw new BadRequestException('The role ID is required');
         const role = await this.findOneById(roleId, dto.status);
         const roleToUpdate = Object.assign(role, dto);
-        const roleUpdated = await this.save(roleToUpdate);
-        return roleUpdated;
+        await this.save(roleToUpdate);
+        return this.findOneById(roleId);
     }
 }
