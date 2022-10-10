@@ -61,8 +61,8 @@ export class UserResolver {
         return this.userService.findByEmail(input);
     }
 
-    @UseGuards(AuthGuard)
-    @UseInterceptors(ProfileInitializationInterceptors())
+    //@UseGuards(AuthGuard)
+    @UseInterceptors(ProfileInitializationInterceptors)
     @UsePipes(new ValidationPipe())
     @Mutation(() => User, { nullable: true })
     public async createUser(@Args('input') input: CreateUserDto): Promise<User> {
@@ -87,8 +87,8 @@ export class UserResolver {
          */
     }
 
-    @UseInterceptors(CreateCompanyInterceptor())
-    @UseInterceptors(ProfileInitializationInterceptors())
+    @UseInterceptors(CreateCompanyInterceptor)
+    @UseInterceptors(ProfileInitializationInterceptors)
     @UsePipes(new ValidationPipe())
     @Mutation(() => User, { nullable: true })
     public async createUserCompany(@Args('input') input: CreateUserDto): Promise<User> {

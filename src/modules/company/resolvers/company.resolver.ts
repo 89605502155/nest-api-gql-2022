@@ -100,7 +100,7 @@ export class CompanyResolver {
     }
 
     @Roles(RoleType.SUPERUSER)
-    @UseInterceptors(InactiveUserByCompanyInterceptor())
+    @UseInterceptors(InactiveUserByCompanyInterceptor)
     @UsePipes(new ValidationPipe())
     @Mutation(() => Company)
     public async deleteCompany(@Args('id') id: number): Promise<Company> {
@@ -110,7 +110,7 @@ export class CompanyResolver {
     @Roles(RoleType.SUPERUSER)
     //@UseInterceptors(MailActiveCompanyInterceptor())
     //@UseInterceptors(CompanyCategoriesInterceptor())
-    @UseInterceptors(ActiveUserByCompanyInterceptor())
+    @UseInterceptors(ActiveUserByCompanyInterceptor)
     @UsePipes(new ValidationPipe())
     @Mutation(() => Company)
     public async activeCompany(@Args('id') id: number): Promise<boolean> {
