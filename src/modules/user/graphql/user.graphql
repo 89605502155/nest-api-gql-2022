@@ -46,7 +46,7 @@ type Query {
 type Mutation {
     createUser(input: CreateUserDto!): User!
     requestUserPassword(input: QueryUserEmailDto!): Boolean! 
-    ##createUserCompany(input: CreateUserDto!,inputPro: CreateProfileUserDto!, inputCom:CreateCompanyDto!): User!
+    createUserCompany(input: CreateUserDto!, inputPro: CreateProfileUserDto!, inputCom: CreateCompanyDto!): User!
     findByEmail(input: QueryUserEmailDto!): Boolean!  
     updateUser(input: UpdateUserDto!): User!
     deleteUser(id: Int!): User!

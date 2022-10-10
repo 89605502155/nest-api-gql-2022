@@ -1,3 +1,4 @@
+import { Status } from '@/shared/enums';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { EntityRepository, Repository } from 'typeorm';
 import { CreateUserDto, FindByEmailDto, QueryUserEmailDto, UpdateUserDto } from '../dtos';
@@ -115,7 +116,7 @@ export class UserRepository extends Repository<User> {
         return userUpdated;
     }
 
-    /*  async activeUserByCompanyId(companyId: number): Promise<User> {
+    async activeUserByCompanyId(companyId: number): Promise<User> {
         const userToUpdate = await this.createQueryBuilder('user')
             .innerJoinAndSelect('companies', 'companies', 'companies.user_id = user.id AND companies.id = :companyId', {
                 companyId,
@@ -124,9 +125,9 @@ export class UserRepository extends Repository<User> {
         userToUpdate.status = Status.ACTIVE;
         const userUpdated = await this.save(userToUpdate);
         return userUpdated;
-    } */
+    }
 
-    /*  async inactiveUserByCompanyId(companyId: number): Promise<User> {
+    async inactiveUserByCompanyId(companyId: number): Promise<User> {
         const userToUpdate = await this.createQueryBuilder('user')
             .innerJoinAndSelect('companies', 'companies', 'companies.user_id = user.id AND companies.id = :companyId', {
                 companyId,
@@ -135,7 +136,7 @@ export class UserRepository extends Repository<User> {
         userToUpdate.status = Status.INACTIVE;
         const userUpdated = await this.save(userToUpdate);
         return userUpdated;
-    } */
+    }
 
     async requestUserPassword(dto: FindByEmailDto): Promise<User> {
         const { email } = dto;

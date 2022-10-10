@@ -1,3 +1,24 @@
+""" Input de paginacion  """
+input Pagination {
+  limit: Int
+  offset: Int
+}
+
+""" Input Search By Name more Options """
+input Search {
+   name: String
+   isActive: Boolean
+   delete: Boolean
+   status: Status
+}
+
+""" Input by Id """
+input JokerById {
+   id: Int!
+}
+
+scalar Image
+
 enum Status {
   ACTIVE
   INACTIVE

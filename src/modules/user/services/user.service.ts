@@ -59,11 +59,11 @@ export class UserService {
         return await this.userRepository.deleteUser(userId);
     }
 
-    /*  async activeUserByCompanyId(companyId: number): Promise<User> {
+    async activeUserByCompanyId(companyId: number): Promise<User> {
         return await this.userRepository.activeUserByCompanyId(companyId);
     }
 
     async inactiveUserByCompanyId(companyId: number): Promise<User> {
         return await this.userRepository.inactiveUserByCompanyId(companyId);
-    } */
+    }
 }

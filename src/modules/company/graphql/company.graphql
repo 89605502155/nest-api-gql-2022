@@ -1,0 +1,69 @@
+
+type Company {
+    id: Int!
+    userId: Int!
+    name: String!
+    city: String
+    description: String
+    address: String
+    phone: String!
+    image: String
+    isActive: Boolean
+    user: User!
+    #timetable: [Timetable!]!
+    #service: [Service!]!
+    #employee: [Employee!]!
+    #categories: [CompanyCategory!]!
+    #location: CompanyLocation
+    deleted: Boolean!
+    punctuation: Int
+    createdAt: String!
+    updatedAt: String!
+}
+
+input CreateCompanyDto {
+    userId: Int
+    name: String!
+    city: String
+    description: String
+    address: String
+    phone: String
+    image: String
+    isActive: Boolean
+}
+
+input UpdateCompanyDto {
+    name: String!
+    description: String
+    address: String
+    phone: String
+    image: String
+    isActive: Boolean
+}
+
+input QueryCompanyDto {
+    categoryId: Int
+    isActive: Boolean
+}
+
+input CategoryIdDto {
+    categoryId: Int!
+}
+
+type Query {
+    getCompany(id: Int!): Company!
+    getCompanies(input: Search!,  pagination: Pagination!): [Company!]!
+    getCompaniesAll: [Company!]!
+    #getCompaniesFollowByUser(userId: Int!): [Company!]!
+    getCompaniesByCategory(input: QueryCompanyDto!, pagination: Pagination): [Company!]!
+    getCompaniesByName(input: Search!, pagination: Pagination!): [Company!]!
+    getCompaniesByNameCount(input: Search!): Int
+}
+
+type Mutation {
+    createCompany(input: CreateCompanyDto!, file: Image): Company!
+    activeCompany(id: Int, input: [CategoryIdDto]!): Boolean
+    updateCompany(id: Int!, input: UpdateCompanyDto!, file: Image): Company!
+    deleteCompany(id: Int!): Company!
+    disabledCompany(id:Int!): Boolean
+}

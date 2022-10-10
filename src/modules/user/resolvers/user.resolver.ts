@@ -6,13 +6,15 @@ import {
     CreateUserDto,
     QueryUserEmailDto,
     UpdateUserDto,
-    /* CreateProfileUserDto,
-    NewContactDto, */
+    CreateProfileUserDto,
+    /* NewContactDto, */
     FindByEmailDto,
 } from '../dtos';
 import { Profile, User } from '../entities';
 import { ProfileService, UserService } from '../services';
 import { ProfileInitializationInterceptors } from '../interceptors';
+import { CreateCompanyInterceptor } from '@/modules/company/interceptors';
+import { RoleType } from '@/modules/role/enums';
 /* import { CreateCompanyDto } from '../../company/dtos';
 import { CompanyService } from '../../company/services';
 import { AuthGuard } from '../../auth/guards/';
@@ -85,22 +87,15 @@ export class UserResolver {
         return email;
     } */
 
-    /*   @UsePipes(new ValidationPipe())
+    @UseInterceptors(CreateCompanyInterceptor())
+    @UseInterceptors(ProfileInitializationInterceptors())
+    @UsePipes(new ValidationPipe())
     @Mutation(() => User, { nullable: true })
-    public async createUserCompany(
-        @Args('input') input: CreateUserDto,
-        @Args('inputPro') inputPro: CreateProfileUserDto,
-        @Args('inputCom') inputCom: CreateCompanyDto,
-    ): Promise<User> {
-        input.roleId = 3;
-        const user: User = await this.userService.createUser(input);
-        inputPro.userId = user.id;
-        inputCom.userId = user.id;
-        await this.profileService.createProfileUser(inputPro);
-        await this.companyService.createCompany(inputCom);
-        await this.mailService.sendEmailRegisterCompany(input, inputPro, inputCom);
-        return user;
-    } */
+    public async createUserCompany(@Args('input') input: CreateUserDto): Promise<User> {
+        input.roleId = RoleType.BUSINESS;
+        return await this.userService.createUser(input);
+        //await this.mailService.sendEmailRegisterCompany(input, inputPro, inputCom);
+    }
 
     /*    @Roles(RoleType.SUPERUSER, RoleType.ADMIN)
     @UseGuards(AuthGuard) */

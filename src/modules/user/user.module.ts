@@ -5,9 +5,9 @@ import { RoleService } from '../role/services';
 import { UserRepository, ProfileRepository /*, UserDetailRepository */ } from './repositories';
 import { UserResolver, ProfileResolver /*, UserDetailResolver */ } from './resolvers';
 import { UserService, ProfileService /*, UserDetailService */ } from './services';
-/*     import { CompanyService } from '../company/services';
-    import { CompanyRepository } from '../company/repositories';
-    import { AuthModule } from '../auth';
+import { CompanyService } from '../company/services';
+import { CompanyRepository } from '../company/repositories';
+/*       import { AuthModule } from '../auth';
     import { MailModule } from '../mail';
     import { FirebaseModule } from '@/modules/firebase'; */
 
@@ -22,7 +22,7 @@ import { UserService, ProfileService /*, UserDetailService */ } from './services
             /*    
             UserDetailRepository, */
             RoleRepository,
-            /*     CompanyRepository, */
+            CompanyRepository,
         ]),
     ],
     providers: [
@@ -31,9 +31,10 @@ import { UserService, ProfileService /*, UserDetailService */ } from './services
         ProfileService,
         RoleService,
         ProfileResolver,
+        CompanyService,
         /* UserDetailService,
         UserDetailResolver,
-        CompanyService, */
+         */
     ],
     exports: [UserService],
 })

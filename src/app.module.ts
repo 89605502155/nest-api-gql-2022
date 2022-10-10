@@ -4,9 +4,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DatabaseModule } from './database';
 import { RoleModule } from './modules/role';
 import { UserModule } from './modules/user';
+import { CompanyModule } from './modules/company';
 
 @Module({
-    imports: [ConfigModule.forRoot({ isGlobal: true }), GraphQL, DatabaseModule, RoleModule, UserModule],
+    imports: [ConfigModule.forRoot({ isGlobal: true }), GraphQL, DatabaseModule, RoleModule, UserModule, CompanyModule],
 })
 export class AppModule {
     static host: string;
