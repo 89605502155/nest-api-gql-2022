@@ -1,0 +1,36 @@
+type Token {
+    access_token: String!
+}
+
+type UserPayload {
+    id: Int!
+    email: String!
+    username: String!
+    status: String!
+    roleId: Int!
+    companyId: Int
+}
+
+input LoginUserDto {
+    email: String!
+    password: String!
+}
+
+input UpdatePasswordDto {
+    password: String!
+    newPassword: String!
+}
+
+type Query {
+    getTokenUser(token: String!): UserPayload
+    userCurrent: UserPayload
+    userMobile: UserPayload
+}
+
+type Mutation {
+      loginApp(input: LoginUserDto! ): Token
+      loginAppFbsdk(input: LoginUserDto!, inputProfile: UpdateProfileUserDto): Token
+      loginWeb(input: LoginUserDto! ): Token
+      createUserApp(input: CreateUserDto!): Token
+      editPassword(input: UpdatePasswordDto!): Token
+}

@@ -12,21 +12,20 @@ import { TimetableService } from '../../timetable/services/timetable.service'; *
 import { CreateCompanyDto, /* QueryCompanyCategoryDto, */ UpdateCompanyDto, QueryCompanyDto } from '../dtos';
 import { Company /*, CompanyCategory, CompanyLocation */ } from '../entities';
 import { /* CompanyCategoryService, CompanyLocationService, */ CompanyService } from '../services';
-//import { AuthGuard, RolesGuard } from '../../auth/guards/';
+import { AuthGuard, RolesGuard } from '@/modules/auth/guards/';
 import { PaginationArgs } from '../../../shared/various/dtos';
 import { User } from '../../user/entities';
 import { UserService } from '@/modules/user/services';
-/* import { GraphqlImageInterceptor } from '../../upload/interceptors';
-import { RoleType } from '../../role/enums';
-import { Roles } from '../../auth/decorator';
- */
+/* import { GraphqlImageInterceptor } from '../../upload/interceptors';*/
+import { RoleType } from '@/modules/role/enums';
+import { Roles } from '@/modules/role/decorators';
 import { SearchCasePipe } from '@/shared/various/pipes';
 import { SearchDto } from '@/shared/various/dtos';
 //import { MailActiveCompanyInterceptor } from '@/modules/mail/interceptors';
 import { ActiveUserByCompanyInterceptor } from '@/modules/user/interceptors';
 //import { CompanyCategoriesInterceptor } from '../interceptors';
 
-//@UseGuards(RolesGuard)
+@UseGuards(RolesGuard)
 @Resolver(() => Company)
 export class CompanyResolver {
     constructor(private readonly companyService: CompanyService, private readonly _userServices: UserService) {}
@@ -36,7 +35,7 @@ export class CompanyResolver {
         private readonly _locationService: CompanyLocationService,
         private readonly _companyCategoryService: CompanyCategoryService, */
 
-    //@Roles(RoleType.SUPERUSER)
+    @Roles(RoleType.SUPERUSER)
     @Query(() => [Company])
     public async getCompaniesAll(): Promise<Company[]> {
         return this.companyService.getCompaniesAll();
@@ -85,14 +84,14 @@ export class CompanyResolver {
         return this.companyService.getCompany(id);
     }
 
-    //@UseGuards(AuthGuard)
+    @UseGuards(AuthGuard)
     @UsePipes(new ValidationPipe())
     @Mutation(() => Company, { nullable: true })
     public async createCompany(@Args('input') input: CreateCompanyDto): Promise<Company> {
         return await this.companyService.createCompany(input);
     }
 
-    //@Roles(RoleType.BUSINESS, RoleType.SUPERUSER)
+    @Roles(RoleType.BUSINESS, RoleType.SUPERUSER)
     //@UseInterceptors(GraphqlImageInterceptor({ type: 'COMPANY', width: 400 }))
     @UsePipes(new ValidationPipe())
     @Mutation(() => Company)
@@ -100,7 +99,7 @@ export class CompanyResolver {
         return await this.companyService.updateCompany(id, input);
     }
 
-    //@Roles(RoleType.SUPERUSER)
+    @Roles(RoleType.SUPERUSER)
     @UsePipes(new ValidationPipe())
     @Mutation(() => Company)
     public async deleteCompany(@Args('id') id: number): Promise<Company> {
@@ -108,7 +107,7 @@ export class CompanyResolver {
         return await this.companyService.deleteCompany(id);
     }
 
-    //@Roles(RoleType.SUPERUSER)
+    @Roles(RoleType.SUPERUSER)
     //@UseInterceptors(MailActiveCompanyInterceptor())
     //@UseInterceptors(CompanyCategoriesInterceptor())
     @UseInterceptors(ActiveUserByCompanyInterceptor())
@@ -118,7 +117,7 @@ export class CompanyResolver {
         return await this.companyService.activeCompany(id);
     }
 
-    //@Roles(RoleType.SUPERUSER)
+    @Roles(RoleType.SUPERUSER)
     @Mutation(() => Company)
     public async disabledCompany(@Args('id') id: number): Promise<boolean> {
         return await this.companyService.disabledCompany(id);

@@ -78,35 +78,35 @@ export class UserRepository extends Repository<User> {
         return userSaved;
     }
 
-    /* async createUserApp(dto: CreateUserDto): Promise<User> {
+    async createUserApp(dto: CreateUserDto): Promise<User> {
         const userExist = await this.userExist(dto);
         if (userExist) throw new BadRequestException('User is already registered');
         const newUser = this.create(dto);
         const user = await this.save(newUser);
-        delete (await user).password;
+        /* delete (await user).password;
         await this.createQueryBuilder('profiles')
             .insert()
             .into(Profile)
             .values({
                 userId: user.id,
             })
-            .execute();
+            .execute(); */
         return user;
-    } */
+    }
 
-    /* async createUserAppFacebook(email: string, password: string): Promise<User> {
+    async createUserAppFacebook(email: string, password: string): Promise<User> {
         const username = await this.createUsername(email);
         const newUser = this.create({ email, password, roleId: 4, status: Status.ACTIVE, username });
         const user = await this.save(newUser);
-        await this.createQueryBuilder('profiles')
+        /* await this.createQueryBuilder('profiles')
             .insert()
             .into(Profile)
             .values({
                 userId: user.id,
             })
-            .execute();
+            .execute(); */
         return user;
-    } */
+    }
 
     async updateUser(userId: number, dto: UpdateUserDto): Promise<User> {
         const user = await this.findOneById(userId);

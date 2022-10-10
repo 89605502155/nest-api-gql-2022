@@ -43,14 +43,14 @@ export class UserService {
         return this.userRepository.createUser(dto);
     }
 
-    /*   async createUserApp(dto: CreateUserDto): Promise<User> {
+    async createUserApp(dto: CreateUserDto): Promise<User> {
         return await this.userRepository.createUserApp(dto);
     }
 
-   async createUserAppFacebook(email: string, password: string): Promise<User> {
+    async createUserAppFacebook(email: string, password: string): Promise<User> {
         return await this.userRepository.createUserAppFacebook(email, password);
     }
-   */
+
     async updateUser(userId: number, dto: UpdateUserDto): Promise<User> {
         return await this.userRepository.updateUser(userId, dto);
     }

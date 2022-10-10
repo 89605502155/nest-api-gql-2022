@@ -5,9 +5,18 @@ import { DatabaseModule } from './database';
 import { RoleModule } from './modules/role';
 import { UserModule } from './modules/user';
 import { CompanyModule } from './modules/company';
+import { AuthModule } from './modules/auth';
 
 @Module({
-    imports: [ConfigModule.forRoot({ isGlobal: true }), GraphQL, DatabaseModule, RoleModule, UserModule, CompanyModule],
+    imports: [
+        ConfigModule.forRoot({ isGlobal: true }),
+        GraphQL,
+        DatabaseModule,
+        RoleModule,
+        UserModule,
+        CompanyModule,
+        AuthModule,
+    ],
 })
 export class AppModule {
     static host: string;

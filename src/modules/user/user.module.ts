@@ -7,13 +7,15 @@ import { UserResolver, ProfileResolver /*, UserDetailResolver */ } from './resol
 import { UserService, ProfileService /*, UserDetailService */ } from './services';
 import { CompanyService } from '../company/services';
 import { CompanyRepository } from '../company/repositories';
-/*       import { AuthModule } from '../auth';
+import { AuthModule } from '../auth';
+/*     
     import { MailModule } from '../mail';
     import { FirebaseModule } from '@/modules/firebase'; */
 
 @Module({
     imports: [
-        /*      AuthModule,
+        AuthModule,
+        /*    
         MailModule,
         FirebaseModule, */
         TypeOrmModule.forFeature([

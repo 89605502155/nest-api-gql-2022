@@ -17,14 +17,12 @@ import { CreateCompanyInterceptor } from '@/modules/company/interceptors';
 import { RoleType } from '@/modules/role/enums';
 /* import { CreateCompanyDto } from '../../company/dtos';
 import { CompanyService } from '../../company/services';
-import { AuthGuard } from '../../auth/guards/';
-import { MailService } from '../../mail/services';
-import { RolesGuard } from '../../auth/guards';
-import { Roles } from '../../auth/decorator'; 
-import { RoleType } from '../../role/enums';*/
+import { MailService } from '../../mail/services';*/
+import { RolesGuard, AuthGuard } from '@/modules/auth/guards';
+import { Roles } from '@/modules/role/decorators';
+import { IUserPayload } from '@/modules/auth/interfaces';
 
-/* @UseGuards(RolesGuard)
- */
+@UseGuards(RolesGuard)
 @Resolver(() => User)
 export class UserResolver {
     constructor(
@@ -34,20 +32,20 @@ export class UserResolver {
     ) {} /*  private readonly companyService: CompanyService,
         private readonly mailService: MailService, */
 
-    /*   @Roles(RoleType.SUPERUSER, RoleType.ADMIN)
-    @UseGuards(AuthGuard) */
+    @UseGuards(AuthGuard)
+    @Roles(RoleType.SUPERUSER, RoleType.ADMIN)
     @Query(() => [User])
     async getUsers(): Promise<User[]> {
         return this.userService.getUsers();
     }
 
-    /*   @UseGuards(AuthGuard) */
+    @UseGuards(AuthGuard)
     @Query(() => User, { nullable: true })
-    async getUserData(@Context('user') user: User): Promise<User> {
-        return this.userService.getUserById(user.id);
+    async getUserData(@Context('user') { id }: IUserPayload): Promise<User> {
+        return this.userService.getUserById(id);
     }
 
-    /*     @Roles(RoleType.SUPERUSER, RoleType.ADMIN, RoleType.CUSTOMER) */
+    @Roles(RoleType.SUPERUSER, RoleType.ADMIN, RoleType.CUSTOMER)
     @Query(() => User, { nullable: true })
     async getUser(@Args('id') id: number): Promise<User> {
         return this.userService.getUserById(id);
@@ -71,11 +69,11 @@ export class UserResolver {
         return await this.userService.createUser(input);
     }
 
-    /*   @UseGuards(AuthGuard) */
+    @UseGuards(AuthGuard)
     @UsePipes(new ValidationPipe())
     @Mutation(() => User, { nullable: true })
-    public async updateUser(@Context('user') user: User, @Args('input') input: UpdateUserDto): Promise<User> {
-        return await this.userService.updateUser(user.id, input);
+    public async updateUser(@Context('user') { id }: IUserPayload, @Args('input') input: UpdateUserDto): Promise<User> {
+        return await this.userService.updateUser(id, input);
     }
 
     /*   @UsePipes(new ValidationPipe())
@@ -97,8 +95,8 @@ export class UserResolver {
         //await this.mailService.sendEmailRegisterCompany(input, inputPro, inputCom);
     }
 
-    /*    @Roles(RoleType.SUPERUSER, RoleType.ADMIN)
-    @UseGuards(AuthGuard) */
+    @UseGuards(AuthGuard)
+    @Roles(RoleType.SUPERUSER, RoleType.ADMIN)
     @UsePipes(new ValidationPipe())
     @Mutation(() => User, { nullable: true })
     public async deleteUser(@Args('id') id: number): Promise<User> {

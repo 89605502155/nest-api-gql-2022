@@ -23,13 +23,15 @@ import {
     CompanyResolver,
 } from './resolvers';
 import { /* CompanyCategoryService, CompanyFollowService, CompanyLocationService, */ CompanyService } from './services';
-/* import { AuthModule } from '../auth';
+import { AuthModule } from '../auth';
+/* 
 import { MailModule } from '../mail';
 import { UploadModule } from '../upload'; */
 
 @Module({
     imports: [
-        /* AuthModule,
+        AuthModule,
+        /* 
         MailModule,
         UploadModule, */
         TypeOrmModule.forFeature([
@@ -60,7 +62,6 @@ import { UploadModule } from '../upload'; */
         ServiceService,
         ConfigService, */
     ],
-    // controllers: [CompanyController],
     exports: [CompanyService /*, CompanyFollowService, CompanyLocationService */],
 })
 export class CompanyModule {}

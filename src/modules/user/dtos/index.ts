@@ -6,3 +6,4 @@ export * from './user.Input';
 export * from './query-username.dto';
 export * from './create-profile.dto';
 export * from './update-profile.dto';
+export * from './update-password.dto';
