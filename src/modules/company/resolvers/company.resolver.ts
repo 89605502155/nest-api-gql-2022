@@ -22,7 +22,7 @@ import { Roles } from '@/modules/role/decorators';
 import { SearchCasePipe } from '@/shared/various/pipes';
 import { SearchDto } from '@/shared/various/dtos';
 //import { MailActiveCompanyInterceptor } from '@/modules/mail/interceptors';
-import { ActiveUserByCompanyInterceptor } from '@/modules/user/interceptors';
+import { ActiveUserByCompanyInterceptor, InactiveUserByCompanyInterceptor } from '@/modules/user/interceptors';
 //import { CompanyCategoriesInterceptor } from '../interceptors';
 
 @UseGuards(RolesGuard)
@@ -100,10 +100,10 @@ export class CompanyResolver {
     }
 
     @Roles(RoleType.SUPERUSER)
+    @UseInterceptors(InactiveUserByCompanyInterceptor())
     @UsePipes(new ValidationPipe())
     @Mutation(() => Company)
     public async deleteCompany(@Args('id') id: number): Promise<Company> {
-        //await this._userServices.inactiveUserByCompanyId(id);
         return await this.companyService.deleteCompany(id);
     }
 

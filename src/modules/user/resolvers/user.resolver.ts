@@ -6,7 +6,6 @@ import {
     CreateUserDto,
     QueryUserEmailDto,
     UpdateUserDto,
-    CreateProfileUserDto,
     /* NewContactDto, */
     FindByEmailDto,
 } from '../dtos';
@@ -62,6 +61,7 @@ export class UserResolver {
         return this.userService.findByEmail(input);
     }
 
+    @UseGuards(AuthGuard)
     @UseInterceptors(ProfileInitializationInterceptors())
     @UsePipes(new ValidationPipe())
     @Mutation(() => User, { nullable: true })
@@ -76,14 +76,16 @@ export class UserResolver {
         return await this.userService.updateUser(id, input);
     }
 
-    /*   @UsePipes(new ValidationPipe())
+    @UsePipes(new ValidationPipe())
     @Mutation(() => User, { nullable: true })
     public async requestUserPassword(@Args('input') input: FindByEmailDto): Promise<boolean> {
         const user = await this.userService.requestUserPassword(input);
-        const profile = await this.profileService.getProfileUserById(user.id);
+        return !!user;
+        /* const profile = await this.profileService.getProfileUserById(user.id);
         const email = await this.mailService.sendEmailRequestPassword(user, profile);
         return email;
-    } */
+         */
+    }
 
     @UseInterceptors(CreateCompanyInterceptor())
     @UseInterceptors(ProfileInitializationInterceptors())

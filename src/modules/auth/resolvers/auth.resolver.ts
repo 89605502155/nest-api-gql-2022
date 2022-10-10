@@ -1,11 +1,11 @@
-import { UsePipes, ValidationPipe, UseGuards, NotFoundException } from '@nestjs/common';
+import { UsePipes, ValidationPipe, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver, Query, Context } from '@nestjs/graphql';
 import { AuthService } from '../services';
-import { LoginUserDto } from '../dtos';
 import { User } from '../../user/entities';
-import { AuthGuard } from '../guards';
+import { AuthGuard, EditPasswordGuard } from '../guards';
 import { CreateUserDto, UpdateProfileUserDto, UpdatePasswordDto } from '../../user/dtos';
 import { IUserPayload } from '../interfaces';
+import { Token, LoginUserDto } from '../dtos';
 
 @Resolver()
 export class AuthResolver {
@@ -19,21 +19,19 @@ export class AuthResolver {
 
     @Query()
     @UseGuards(AuthGuard)
-    userMobile(@Context('user') user: User) {
+    async userMobile(@Context('user') user: IUserPayload): Promise<IUserPayload> {
         return user;
     }
 
     @UsePipes(new ValidationPipe())
     @Mutation(() => User)
-    async loginApp(@Args('input') input: LoginUserDto) {
-        const { email, password } = input;
+    async loginApp(@Args('input') { email, password }: LoginUserDto) {
         return await this.authService.validateUserGqlApp(email, password);
     }
 
     @UsePipes(new ValidationPipe())
     @Mutation(() => User)
-    async loginWeb(@Args('input') input: LoginUserDto) {
-        const { email, password } = input;
+    async loginWeb(@Args('input') { email, password }: LoginUserDto) {
         return await this.authService.validateUserGqlWeb(email, password);
     }
 
@@ -43,15 +41,15 @@ export class AuthResolver {
         return await this.authService.createUserApp(input);
     }
 
-    @UsePipes(new ValidationPipe())
     @UseGuards(AuthGuard)
+    @UseGuards(EditPasswordGuard)
+    @UsePipes(new ValidationPipe())
     @Mutation(() => User, { nullable: true })
-    public async editPassword(@Context('user') user: User, @Args('input') input: UpdatePasswordDto) {
-        const { password, newPassword } = await input;
-        if (password == newPassword) {
-            throw new NotFoundException('La contraseña no deben ser iguales');
-        }
-        return await this.authService.editPassword(user.email, input);
+    public async editPassword(
+        @Context('user') { email }: IUserPayload,
+        @Args('input') input: UpdatePasswordDto,
+    ): Promise<Token> {
+        return await this.authService.editPassword(email, input);
     }
 
     @UsePipes(new ValidationPipe())
