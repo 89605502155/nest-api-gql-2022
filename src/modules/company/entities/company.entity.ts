@@ -21,6 +21,13 @@ export class Company {
     @PrimaryGeneratedColumn('increment')
     id: number;
 
+    @Column({ type: 'int', name: 'user_id', nullable: false })
+    userId: number;
+
+    @OneToOne(() => User)
+    @JoinColumn({ name: 'user_id' })
+    user: User;
+
     @Column({ type: 'varchar', length: 50 })
     name: string;
 
@@ -50,13 +57,6 @@ export class Company {
         },
     })
     isActive: boolean;
-
-    @Column({ type: 'int', name: 'user_id', nullable: false })
-    userId: number;
-
-    @OneToOne(() => User)
-    @JoinColumn({ name: 'user_id' })
-    user: User;
 
     @CreateDateColumn({ type: 'timestamp', name: 'created_at', nullable: true })
     createdAt: Date;

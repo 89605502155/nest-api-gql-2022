@@ -19,6 +19,7 @@
     <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
   <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
 </p>
+<img src="./bbdd-strecture.png" width="320" alt="BB DD" />
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
@@ -74,6 +75,14 @@ $ npm run migration:revert
 $ npm run seed
 
 ```
+## curso  en youtube Marluan Espiritusanto
+
+```
+## muchas de las buenas practicas las pueden ver en este curso de Marluan Espiritusanto
+https://www.youtube.com/watch?v=hekO-GO_tAY&list=PLzHaXzj_WAyk9NF0OIa1gRYqAntHF0fMF 
+
+
+```
 ## Docker Container
 
 ```docker
@@ -82,3 +91,4 @@ $ sudo docker-compose up -d
 
 sudo sudo lsof -i :5432
 sudo kill -9 PID
+
